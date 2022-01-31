@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Login | Todo</title>
+    {% endblock title %}
+</head>
+
+<body>
+    {% block content %}
+    <div class="container pt-5">
+        <div class="col-lg-4 mx-auto shadow p-0 mt-5">
+            <div class="alert alert-info">
+                <h4>Login Here</h4>
+            </div>
+            <div class="p-4">
+                <form action="login" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <hr>
+                    <center>
+                        <input type="submit" value="Login" class="btn btn-success">
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+</body>
+
+</html>

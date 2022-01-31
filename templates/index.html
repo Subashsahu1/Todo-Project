@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>Home | Todo</title>
+    {% endblock title %}
+</head>
+
+<body>
+    {% block content %}
+    <div>
+        <div class="container pt-5">
+            <div class="row p-0 mt-5">
+                <div class="col-lg-4 mx-auto shadow p-0">
+                    <div class="alert alert-info">
+                        <center>
+                            <h4>Add New List</h4>
+                        </center>
+                    </div>
+                    <div class="p-4">
+                        <form action="AddNote" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <hr>
+                            <center>
+                                <input type="submit" value="Add" class="btn btn-success">
+                            </center>
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <div">
+                        {% if notes %}
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Sl.No</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                        <th>Priority</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for note in notes %}
+                                    <tr class="text-center">
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{note.title}}</td>
+                                        <td>
+                                            {% if note.status == 'c' %}
+                                                ✅
+                                            {% else %}
+                                                🕘
+                                            {% endif %}
+                                        </td>
+                                        <td>{{note.priority}}</td>
+                                        <td>
+                                            <a href="deleteTodo{{note.id}}" title="Delete">🗑️</a>
+                                            {% if note.status == 'p' %}
+                                            <a href="change-status{{ note.id }}c" title="Mark Completed">✅</a>
+                                            {% else %}
+                                            <a href="change-status{{ note.id }}p" title="Mark Pending">🕘</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                            <div class="alert alert-secondary text-center">
+                                <p>No Todos</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+</body>
+
+</html>
